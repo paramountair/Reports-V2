@@ -1,10 +1,25 @@
-# Paramount Reporting Dashboard — Tech Deep Dive
+# Paramount Reporting Dashboard — V5 Fixed Decision Reporting
 
-Static prototype using fake generated data only.
+This version fixes the broken filter behaviour and rebuilds the technician section as a management decision tool.
 
-Updates in this version:
-- Period dropdown now contains all past weekly periods, 4-week blocks, monthly periods, seasons by year, yearly views and full 5-year history.
-- Technician Performance page has been rebuilt with better spacing, larger charts and an in-depth weekly breakdown.
-- Individual technician filter now shows five years of weekly data when using All History.
+## Important
+Replace all files in GitHub together:
+- index.html
+- styles.css
+- app.js
+- data.js
+- README.md
 
-Open `index.html` in a browser or upload these files to GitHub Pages.
+Do not upload only index.html, because the filters and graphs rely on the matching app.js file.
+
+## Technician reporting included
+- Weekly, Monthly, 4-Weekly, Seasonal and Yearly periods
+- Full 5-year period list
+- Clickable period rows
+- All-technician breakdown for the selected period
+- Quotes vs maintenance attendances
+- Maintenance hours
+- Maintenance-attendance-to-quote ratio
+- Peer benchmarking against team average
+- Target benchmark lines
+- Larger readable graph text
