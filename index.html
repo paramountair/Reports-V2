@@ -39,6 +39,7 @@
     </section>
 
     <section class="filters card simplified-filters">
+      <div class="field"><label>View</label><select id="periodTypeSelect"><option>Weekly</option><option>Monthly</option><option>4-Weekly</option><option>Seasonally</option><option>Yearly</option></select></div>
       <div class="field period-field"><label>Period</label><select id="periodSelect"></select></div>
       <div class="field"><label>Technician</label><select id="techSelect"><option>All technicians</option></select></div>
       <button id="generate" class="generate">Generate Report</button>
@@ -82,16 +83,21 @@
         <div class="kpi"><small>Quotes raised</small><strong id="techQuoteKpi">—</strong><span>technician generated quotes</span></div>
         <div class="kpi"><small>Quoted value</small><strong id="techValueKpi">—</strong><span>total quoted dollars</span></div>
       </div>
+      <article class="card decision-card wide-card">
+        <h2>Period list</h2>
+        <p>When Weekly is selected this lists every week in the 5-year dataset. Click any row to open that period and review every technician inside it.</p>
+        <div class="table-wrap period-table-wrap"><table id="periodSummaryTable"></table></div>
+      </article>
       <div class="grid two tech-page-grid">
-        <article class="card"><h2>Technician weekly trend</h2><p>Five years of weekly attendances vs quotes. Use the technician dropdown to drill into one person.</p><div id="chartTechDetail" class="chart tall"></div></article>
-        <article class="card"><h2>Quoted value by technician</h2><p>Total quote value across the selected period.</p><div id="chartTopTechs" class="chart tall"></div></article>
+        <article class="card"><h2>Quote rate benchmark</h2><p>Each technician compared against team average and the target benchmark.</p><div id="chartTechRatio" class="chart benchmark-chart"></div></article>
+        <article class="card"><h2>Maintenance opportunity benchmark</h2><p>Maintenance quote rate by technician, with team average and target lines.</p><div id="chartMaintRatio" class="chart benchmark-chart"></div></article>
       </div>
       <div class="grid two tech-page-grid">
-        <article class="card"><h2>Quote-to-attendance ratio</h2><p>Quotes generated ÷ attendances by technician.</p><div id="chartTechRatio" class="chart"></div></article>
-        <article class="card"><h2>Maintenance quote ratio</h2><p>Quotes written ÷ maintenance hours by technician.</p><div id="chartMaintRatio" class="chart"></div></article>
+        <article class="card"><h2>Technician trend</h2><p>5-year period trend for attendances vs quotes. Use the technician dropdown to drill into one person.</p><div id="chartTechDetail" class="chart tall"></div></article>
+        <article class="card"><h2>Opportunity funnel</h2><p>Shows the leak from maintenance attendances to quotes written for the selected period.</p><div id="chartTopTechs" class="chart tall"></div></article>
       </div>
-      <article class="card wide-card"><h2>Technician weekly breakdown</h2><p>Week-by-week detail for the selected technician or all technicians. Newest weeks appear first.</p><div class="table-wrap large-table"><table id="techWeeklyTable"></table></div></article>
-      <article class="card wide-card"><h2>Technician leaderboard</h2><p>Click a row to filter to one technician.</p><div class="table-wrap"><table id="techTable"></table></div></article>
+      <article class="card wide-card"><h2>Selected period technician breakdown</h2><p>All technician names with quotes vs maintenance attendances, maintenance hours, and maintenance-attendance-to-quote ratio.</p><div class="table-wrap large-table"><table id="techWeeklyTable"></table></div></article>
+      <article class="card wide-card"><h2>Technician leaderboard</h2><p>Click a row to filter to one technician and compare them against peers.</p><div class="table-wrap"><table id="techTable"></table></div></article>
     </section>
 
     <section id="margins" class="page">
