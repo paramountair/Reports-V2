@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Paramount Airconditioning · Quote & Technician Activity Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><div class="mark">◎</div><div><div class="name">Paramount</div><div class="sub">Airconditioning</div></div></div>
+    <div class="pill">Reporting · VIC</div>
+    <div class="nav-title">Reports</div>
+    <nav id="mainNav">
+      <button data-page="overview" class="active">Executive Overview</button>
+      <button data-page="quotes">Quote Activity</button>
+      <button data-page="technicians">Technician Performance</button>
+      <button data-page="margins">Margins & Win Rate</button>
+      <button data-page="losses">Loss Reasons</button>
+    </nav>
+    <div class="nav-title">Actions</div>
+    <button class="action" onclick="window.print()">Generate PDF Report</button>
+    <button class="action" id="exportCsv">Export Data (CSV)</button>
+    <button class="action" onclick="window.print()">Print</button>
+    <footer>
+      <strong>Comfort Engineered</strong><br/>
+      Commercial · Industrial · Data Centres
+    </footer>
+  </aside>
+
+  <main>
+    <section class="masthead">
+      <div>
+        <div class="eyebrow">VIC · Quote & Service Reporting</div>
+        <h1 id="pageTitle">Executive Overview</h1>
+        <p id="pageIntro">Headline performance across quoting, margin and technician activity.</p>
+      </div>
+      <div class="device"><span id="deviceNum">01</span><small>Comfort<br/>Engineered</small></div>
+    </section>
+
+    <section class="filters card simplified-filters">
+      <div class="field"><label>Period</label><select id="periodType"><option>Weekly</option><option>Monthly</option><option selected>4-Weekly</option><option>Seasonally</option><option>Yearly</option></select></div>
+      <div class="field"><label>Technician</label><select id="techSelect"><option>All technicians</option></select></div>
+      <button id="generate" class="generate">Generate Report</button>
+    </section>
+
+    <section class="report-banner">
+      <div>Paramount Airconditioning · VIC</div>
+      <strong>Quote & Technician Activity Report</strong>
+      <span id="periodLabel">Selected period</span>
+    </section>
+
+    <section id="overview" class="page active">
+      <div class="kpis">
+        <div class="kpi"><small>Quotes Created</small><strong id="kQuotes">—</strong><span id="kQuotesSub">selected period</span></div>
+        <div class="kpi"><small>Quote Conversion</small><strong id="kConversion">—</strong><span>won ÷ raised</span></div>
+        <div class="kpi"><small>Revenue Won</small><strong id="kRevenue">—</strong><span>converted quote value</span></div>
+        <div class="kpi"><small>Average EGP</small><strong id="kEgp">—</strong><span>target line 55%</span></div>
+      </div>
+      <div class="grid two">
+        <article class="card"><h2>Weekly quote value — won vs total</h2><p>Dollar value of quotes raised vs converted, by week.</p><div id="chartQuoteValue" class="chart"></div></article>
+        <article class="card"><h2>Win rate (by count)</h2><p>Quotes won ÷ quotes raised.</p><div id="chartWinRate" class="chart"></div></article>
+      </div>
+      <div class="grid two">
+        <article class="card"><h2>Average gross margin</h2><p>All quotes vs won quotes. Orange line shows the 55% EGP target.</p><div id="chartEgpOverview" class="chart"></div></article>
+        <article class="card"><h2>Volume mix</h2><p>Quote outcomes for the selected period.</p><div id="chartVolumeMix" class="chart"></div></article>
+      </div>
+    </section>
+
+    <section id="quotes" class="page">
+      <div class="grid two">
+        <article class="card"><h2>Quotes raised vs won — count</h2><p>Volume of quote activity by period.</p><div id="chartQuoteCount" class="chart"></div></article>
+        <article class="card"><h2>Quote ageing</h2><p>Current pending quote count by age bucket.</p><div id="chartAgeing" class="chart"></div></article>
+      </div>
+      <article class="card"><h2>Weekly detail</h2><p>Newest first, filtered by selected range.</p><div class="table-wrap"><table id="quoteTable"></table></div></article>
+    </section>
+
+    <section id="technicians" class="page">
+      <div class="grid three">
+        <article class="card"><h2>Top technicians — quoted value</h2><p>Total $ of quotes generated.</p><div id="chartTopTechs" class="chart"></div></article>
+        <article class="card"><h2>Quote-to-attendance ratio</h2><p>Quotes generated ÷ attendances.</p><div id="chartTechRatio" class="chart"></div></article>
+        <article class="card"><h2>Maintenance quote ratio</h2><p>Quotes written ÷ maintenance hours.</p><div id="chartMaintRatio" class="chart"></div></article>
+      </div>
+      <div class="grid two">
+        <article class="card"><h2>Technician leaderboard</h2><p>Click a row to filter to one technician.</p><div class="table-wrap"><table id="techTable"></table></div></article>
+        <article class="card"><h2>Technician detail</h2><p>Quotes generated, attendances, ratios and EGP by week.</p><div id="chartTechDetail" class="chart"></div></article>
+      </div>
+    </section>
+
+    <section id="margins" class="page">
+      <div class="grid two">
+        <article class="card"><h2>Average EGP</h2><p>Average estimated gross profit %, with 55% target line.</p><div id="chartEgp" class="chart large"></div></article>
+        <article class="card"><h2>Win rate — count vs value</h2><p>Compares how many we win against how much we win in dollars.</p><div id="chartWinCountValue" class="chart large"></div></article>
+      </div>
+      <article class="card"><h2>Margin by technician</h2><p>Average nett EGP on technician-generated quotes.</p><div class="table-wrap"><table id="marginTable"></table></div></article>
+    </section>
+
+    <section id="losses" class="page">
+      <div class="grid two">
+        <article class="card"><h2>Top loss reasons</h2><p>Why we lost quotes in the selected period — by count.</p><div id="chartLossReasons" class="chart"></div></article>
+        <article class="card"><h2>Lost value by reason</h2><p>Dollar value of quotes lost, by reason.</p><div id="chartLostValue" class="chart"></div></article>
+      </div>
+      <article class="card"><h2>Reason breakdown</h2><p>Count, share of losses, total $ and average $ per lost quote.</p><div class="table-wrap"><table id="lossTable"></table></div></article>
+    </section>
+  </main>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
