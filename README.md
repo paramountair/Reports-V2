@@ -1,26 +1,10 @@
-# Paramount Reporting Dashboard — App-Style Prototype
+# Paramount Reporting Dashboard — Tech Deep Dive
 
-This is a static, multi-view dashboard prototype inspired by the supplied Perplexity app reference. It uses fake generated data only.
+Static prototype using fake generated data only.
 
-## Open it
+Updates in this version:
+- Period dropdown now contains all past weekly periods, 4-week blocks, monthly periods, seasons by year, yearly views and full 5-year history.
+- Technician Performance page has been rebuilt with better spacing, larger charts and an in-depth weekly breakdown.
+- Individual technician filter now shows five years of weekly data when using All History.
 
-Unzip the folder and open `index.html` in a browser.
-
-## Included views
-
-- Executive Overview
-- Quote Activity
-- Technician Performance
-- Margins & Win Rate
-- Loss Reasons
-
-## Filters
-
-The Executive Overview filter bar has been simplified to:
-
-- Period: Weekly, Monthly, 4-Weekly, Seasonally, Yearly
-- Technician: All technicians or one selected technician
-
-## Notes
-
-No real company/customer data is included. The data comes from the fake 5-year workbook generated for prototyping.
+Open `index.html` in a browser or upload these files to GitHub Pages.
