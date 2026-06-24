@@ -28,6 +28,7 @@ const lossReasons=['Price','No response','Competitor awarded','Scope changed','T
 function seeded(s){let h=2166136261; for(let i=0;i<s.length;i++){h^=s.charCodeAt(i); h+= (h<<1)+(h<<4)+(h<<7)+(h<<8)+(h<<24)} return Math.abs(h>>>0)/4294967295}
 function labelWeek(w){return `${labelDate(parseDate(w))} – ${labelDate(addDays(parseDate(w),6))}`}
 function init(){
+  buildPeriodOptions();
   techNames.forEach(t=>techSelect.add(new Option(t,t)));
   document.querySelectorAll('#mainNav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
   ['periodType','techSelect'].forEach(id=>document.getElementById(id).addEventListener('change',update));
@@ -39,47 +40,60 @@ function showPage(page){
   const titles={overview:['Executive Overview','Headline performance across quoting, margin and technician activity.','01'],quotes:['Quote Activity','Quote volume, ageing, revenue and weekly detail.','02'],technicians:['Technician Performance','Individual technician statistics, ratios and maintenance-hour performance.','03'],margins:['Margins & Win Rate','Average EGP, target tracking and conversion quality.','04'],losses:['Loss Reasons','Quote losses by reason, count, value and share.','05']};
   pageTitle.textContent=titles[page][0]; pageIntro.textContent=titles[page][1]; deviceNum.textContent=titles[page][2];
 }
-function selectedWeeks(){
-  const type=periodType.value;
-  const latestWeek=allWeeks[allWeeks.length-1];
-  const latestDate=parseDate(latestWeek);
+const periodLookup={};
+function addGroup(label){ const g=document.createElement('optgroup'); g.label=label; periodType.appendChild(g); return g; }
+function addPeriod(group,label,weeks,type){ const key=`${type}|${label}`; periodLookup[key]={label,weeks,type}; group.appendChild(new Option(label,key)); }
+function buildPeriodOptions(){
+  periodType.innerHTML='';
+  const weekly=addGroup('Weekly - all past weeks');
+  allWeeks.slice().reverse().forEach(w=>addPeriod(weekly,`Weekly · ${labelWeek(w)}`,[w],'weekly'));
 
-  if(type==='Weekly') return [latestWeek];
-  if(type==='4-Weekly') return allWeeks.slice(-4);
-  if(type==='Monthly'){
-    const latestMonth=latestWeek.slice(0,7);
-    return allWeeks.filter(w=>w.slice(0,7)===latestMonth);
-  }
-  if(type==='Yearly'){
-    const latestYear=latestDate.getFullYear();
-    return allWeeks.filter(w=>parseDate(w).getFullYear()===latestYear);
-  }
-  if(type==='Seasonally'){
-    const month=latestDate.getMonth()+1;
-    const currentSeason=Object.keys(seasons).find(season=>seasons[season].includes(month));
-    const latestYear=latestDate.getFullYear();
-    return allWeeks.filter(w=>{
-      const d=parseDate(w);
-      return d.getFullYear()===latestYear && seasons[currentSeason].includes(d.getMonth()+1);
-    });
-  }
-  return allWeeks.slice(-4);
+  const four=addGroup('4-weekly blocks');
+  allWeeks.slice().reverse().forEach(w=>{ const i=allWeeks.indexOf(w); const weeks=allWeeks.slice(Math.max(0,i-3),i+1); addPeriod(four,`4-Weekly · ${labelDate(parseDate(weeks[0]))} – ${labelDate(addDays(parseDate(weeks[weeks.length-1]),6))}`,weeks,'4weekly'); });
+
+  const months=[...new Set(allWeeks.map(w=>w.slice(0,7)))].sort();
+  const monthly=addGroup('Monthly');
+  months.slice().reverse().forEach(m=>addPeriod(monthly,new Date(m+'-01').toLocaleDateString('en-AU',{month:'long',year:'numeric'}),allWeeks.filter(w=>w.slice(0,7)===m),'monthly'));
+
+  const seasonal=addGroup('Seasonal');
+  years.slice().reverse().forEach(y=>['Summer','Autumn','Winter','Spring'].forEach(season=>{
+    let weeks=allWeeks.filter(w=>{ const d=parseDate(w), m=d.getMonth()+1, yy=d.getFullYear(); if(season==='Summer') return (yy===y && [1,2].includes(m)) || (yy===y-1 && m===12); return yy===y && seasons[season].includes(m); });
+    if(weeks.length) addPeriod(seasonal,`${season} ${y}`,weeks,season.toLowerCase());
+  }));
+
+  const yearly=addGroup('Yearly');
+  years.slice().reverse().forEach(y=>addPeriod(yearly,`${y}`,allWeeks.filter(w=>parseDate(w).getFullYear()===y),'yearly'));
+
+  const latestFour=[...Object.keys(periodLookup)].find(k=>k.startsWith('4weekly|'));
+  periodType.value=latestFour || Object.keys(periodLookup)[0];
 }
+function selectedWeeks(){
+  return (periodLookup[periodType.value]?.weeks || allWeeks.slice(-4));
+}
+function selectedPeriodName(){ return periodLookup[periodType.value]?.label || 'Selected period'; }
 function aggregateQuotes(rows){return rows.reduce((a,r)=>{a.created+=r.created_count||0; a.won+=r.won_count||0; a.createdValue+=r.created_value||0; a.wonValue+=r.won_value||0; a.pending+=r.pending_count||0; a.a0+=r.age_0_7||0; a.a1+=r.age_8_14||0; a.a2+=r.age_15_30||0; a.a3+=r.age_31_plus||0; a.egpAll+=(r.avg_gross_margin_created||0)*(r.created_count||0); a.egpWon+=(r.avg_gross_margin_won||0)*(r.won_count||0); return a},{created:0,won:0,createdValue:0,wonValue:0,pending:0,a0:0,a1:0,a2:0,a3:0,egpAll:0,egpWon:0});}
 function techAgg(rows){const m={}; rows.forEach(r=>{const t=r.technician; if(!m[t])m[t]={technician:t,att:0,quotes:0,value:0,egpW:0,maintHours:0,maintJobs:0}; m[t].att+=r.attendances||0; m[t].quotes+=r.quotes_generated||0; m[t].value+=r.total_value||0; m[t].egpW+=(r.avg_nett_egp||0)*(r.quotes_generated||0); m[t].maintHours+=r.maint_hours||0; m[t].maintJobs+=r.maint_jobs_attended||0;}); return Object.values(m).map(x=>({...x,ratio:x.att?x.quotes/x.att:0, maintRatio:x.maintHours?x.quotes/x.maintHours:0, egp:x.quotes?x.egpW/x.quotes:0}));}
 function update(){
   const weeks=selectedWeeks(); const qRows=QUOTES_DATA.filter(r=>weeks.includes(r.week)); let tRows=TECH_DATA.filter(r=>weeks.includes(r.week)); if(techSelect.value!=='All technicians') tRows=tRows.filter(r=>r.technician===techSelect.value);
-  const q=aggregateQuotes(qRows); kQuotes.textContent=fmtNum(q.created); kConversion.textContent=fmtPct(q.created?q.won/q.created:0); kRevenue.textContent=fmtMoney(q.wonValue); kEgp.textContent=fmtPct(q.won?q.egpWon/q.won:0); periodLabel.textContent=weeks.length?`${labelDate(parseDate(weeks[0]))} – ${labelDate(addDays(parseDate(weeks[weeks.length-1]),6))}`:'No data';
+  const q=aggregateQuotes(qRows); kQuotes.textContent=fmtNum(q.created); kConversion.textContent=fmtPct(q.created?q.won/q.created:0); kRevenue.textContent=fmtMoney(q.wonValue); kEgp.textContent=fmtPct(q.won?q.egpWon/q.won:0); periodLabel.textContent=weeks.length?`${selectedPeriodName()} · ${labelDate(parseDate(weeks[0]))} – ${labelDate(addDays(parseDate(weeks[weeks.length-1]),6))}`:'No data';
   renderAll(qRows,tRows,q);
 }
 function renderAll(qRows,tRows,q){
   const techs=techAgg(tRows).sort((a,b)=>b.value-a.value);
-  barLine('chartQuoteValue', qRows.slice(-24).map(r=>({label:r.week.slice(5),bar:r.created_value,line:r.won_value})), '$ Total', '$ Won');
-  lineChart('chartWinRate', qRows.slice(-52).map(r=>({label:r.week.slice(5),v:r.created_count?r.won_count/r.created_count:0})), 0, 1, false);
-  egpChart('chartEgpOverview', qRows.slice(-52).map(r=>({label:r.week.slice(5),a:r.avg_gross_margin_created,w:r.avg_gross_margin_won})));
+  const chartRows=qRows.length<8?QUOTES_DATA.slice(-52):qRows;
+  const techChartRows=qRows.length<8?TECH_DATA.filter(r=>chartRows.some(w=>w.week===r.week) && (techSelect.value==='All technicians'||r.technician===techSelect.value)):tRows;
+  barLine('chartQuoteValue', chartRows.slice(-24).map(r=>({label:r.week.slice(5),bar:r.created_value,line:r.won_value})), '$ Total', '$ Won');
+  lineChart('chartWinRate', chartRows.slice(-52).map(r=>({label:r.week.slice(5),v:r.created_count?r.won_count/r.created_count:0})), 0, 1, false);
+  egpChart('chartEgpOverview', chartRows.slice(-52).map(r=>({label:r.week.slice(5),a:r.avg_gross_margin_created,w:r.avg_gross_margin_won})));
   donut('chartVolumeMix',[['Won',q.won],['Pending',q.pending],['Lost/Other',Math.max(q.created-q.won-q.pending,0)]]);
-  barLine('chartQuoteCount', qRows.slice(-30).map(r=>({label:r.week.slice(5),bar:r.created_count,line:r.won_count})), 'Raised', 'Won');
+  monthlyRevenueChart(chartRows);
+  seasonalVolumeChart(qRows.length<12?QUOTES_DATA.filter(r=>parseDate(r.week).getFullYear()===parseDate(chartRows.at(-1).week).getFullYear()):qRows);
+  lineChart('chartAvgQuoteSize', chartRows.slice(-52).map(r=>({label:r.week.slice(5),v:r.created_count?r.created_value/r.created_count:0})), 0, null, false);
+  hbar('chartTechShare',techAgg(techChartRows).sort((a,b)=>b.value-a.value).slice(0,8).map(t=>[t.technician,t.value]),true);
+  barLine('chartQuoteCount', chartRows.slice(-30).map(r=>({label:r.week.slice(5),bar:r.created_count,line:r.won_count})), 'Raised', 'Won');
   hbar('chartAgeing',[['0–7 days',q.a0],['8–14 days',q.a1],['15–30 days',q.a2],['31+ days',q.a3]]);
+  lineChart('chartPendingTrend', chartRows.slice(-52).map(r=>({label:r.week.slice(5),v:r.pending_count||0})), 0, null, false);
+  barLine('chartValueGap', chartRows.slice(-24).map(r=>({label:r.week.slice(5),bar:r.created_value,line:r.won_value})), 'Quoted $', 'Won $');
   table('quoteTable',['Week','Raised','Won','Conversion','Quoted $','Won $','Avg EGP'],qRows.slice().reverse().map(r=>[labelWeek(r.week),r.created_count,r.won_count,fmtPct(r.created_count?r.won_count/r.created_count:0),fmtMoney(r.created_value),fmtMoney(r.won_value),fmtPct(r.avg_gross_margin_won)]));
   hbar('chartTopTechs',techs.slice(0,10).map(t=>[t.technician,t.value]),true);
   hbar('chartTechRatio',techs.slice().sort((a,b)=>b.ratio-a.ratio).slice(0,10).map(t=>[t.technician,t.ratio]));
@@ -91,6 +105,17 @@ function renderAll(qRows,tRows,q){
   table('marginTable',['Technician','Quotes','Quoted $','Average Nett EGP','Target Gap'],techs.map(t=>[t.technician,fmtNum(t.quotes),fmtMoney(t.value),fmtPct(t.egp),fmtPct(t.egp-.55)]));
   const losses=lossData(qRows); hbar('chartLossReasons',losses.map(x=>[x.reason,x.count])); hbar('chartLostValue',losses.map(x=>[x.reason,x.value]),true); const totalLoss=losses.reduce((s,x)=>s+x.count,0); table('lossTable',['Reason','Count','Share','Lost $','Average $'],losses.map(x=>[x.reason,x.count,fmtPct(totalLoss?x.count/totalLoss:0),fmtMoney(x.value),fmtMoney(x.count?x.value/x.count:0)]));
 }
+function monthlyRevenueChart(rows){
+  const m={};
+  rows.forEach(r=>{const key=r.week.slice(0,7); if(!m[key])m[key]={label:new Date(key+'-01').toLocaleDateString('en-AU',{month:'short',year:'2-digit'}),bar:0,line:0}; m[key].bar+=r.created_value||0; m[key].line+=r.won_value||0;});
+  barLine('chartMonthlyRevenue',Object.values(m).slice(-18),'Quoted $','Won $');
+}
+function seasonalVolumeChart(rows){
+  const totals={Summer:0,Autumn:0,Winter:0,Spring:0};
+  rows.forEach(r=>{const m=parseDate(r.week).getMonth()+1; const season=Object.keys(seasons).find(s=>seasons[s].includes(m)); totals[season]+=r.created_count||0;});
+  hbar('chartSeasonVolume',Object.entries(totals));
+}
+
 function lossData(qRows){const totals={}; lossReasons.forEach(r=>totals[r]={reason:r,count:0,value:0}); qRows.forEach(q=>{let lost=Math.max(q.created_count-q.won_count-q.pending_count,0)+Math.round((q.pending_count||0)*.35); lossReasons.forEach(reason=>{const p=.08+seeded(q.week+reason)*.25; const c=Math.round(lost*p); totals[reason].count+=c; totals[reason].value+=c*((q.created_value||0)/Math.max(q.created_count||1,1))*(.75+seeded(reason+q.week)*.8);});}); return Object.values(totals).sort((a,b)=>b.count-a.count)}
 function svgWrap(id,content){document.getElementById(id).innerHTML=`<svg viewBox="0 0 760 320" preserveAspectRatio="none">${content}</svg>`}
 function lineChart(id,data,min=0,max=null,two=false){if(!data.length)return svgWrap(id,''); max=max??Math.max(...data.map(d=>d.v),.01); const W=760,H=320,L=46,R=20,T=20,B=40,plotW=W-L-R,plotH=H-T-B; const x=i=>L+(data.length<=1?0:i*plotW/(data.length-1)); const y=v=>T+plotH-(v-min)/(max-min)*plotH; let grid=`<line class="axis" x1="${L}" x2="${W-R}" y1="${y(.55)}" y2="${y(.55)}"></line><text class="label" x="${W-R-70}" y="${y(.55)-5}">55% target</text>`; const path=vals=>vals.map((d,i)=>(i?'L':'M')+x(i)+' '+y(d)).join(' '); let c=`${grid}<path class="line1" d="${path(data.map(d=>d.v))}"/>`; if(two)c+=`<path class="line2" d="${path(data.map(d=>d.v2||0))}"/>`; c+=`<text class="legend" x="${L}" y="${H-12}">${data[0].label}</text><text class="legend" x="${W-R-60}" y="${H-12}">${data[data.length-1].label}</text>`; svgWrap(id,c)}

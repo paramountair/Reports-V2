@@ -39,7 +39,7 @@
     </section>
 
     <section class="filters card simplified-filters">
-      <div class="field"><label>Period</label><select id="periodType"><option>Weekly</option><option>Monthly</option><option selected>4-Weekly</option><option>Seasonally</option><option>Yearly</option></select></div>
+      <div class="field"><label>Period</label><select id="periodType"></select></div>
       <div class="field"><label>Technician</label><select id="techSelect"><option>All technicians</option></select></div>
       <button id="generate" class="generate">Generate Report</button>
     </section>
@@ -65,12 +65,24 @@
         <article class="card"><h2>Average gross margin</h2><p>All quotes vs won quotes. Orange line shows the 55% EGP target.</p><div id="chartEgpOverview" class="chart"></div></article>
         <article class="card"><h2>Volume mix</h2><p>Quote outcomes for the selected period.</p><div id="chartVolumeMix" class="chart"></div></article>
       </div>
+      <div class="grid two">
+        <article class="card"><h2>Monthly revenue trend</h2><p>Won revenue by month, so the pattern feels less flat than one week at a time.</p><div id="chartMonthlyRevenue" class="chart"></div></article>
+        <article class="card"><h2>Seasonal quote volume</h2><p>Summer, autumn, winter and spring compared across the selected year.</p><div id="chartSeasonVolume" class="chart"></div></article>
+      </div>
+      <div class="grid two">
+        <article class="card"><h2>Average quote size</h2><p>Average value per quote raised each week.</p><div id="chartAvgQuoteSize" class="chart"></div></article>
+        <article class="card"><h2>Technician quote share</h2><p>Which technicians generated the most quote value for the selected period.</p><div id="chartTechShare" class="chart"></div></article>
+      </div>
     </section>
 
     <section id="quotes" class="page">
       <div class="grid two">
         <article class="card"><h2>Quotes raised vs won — count</h2><p>Volume of quote activity by period.</p><div id="chartQuoteCount" class="chart"></div></article>
         <article class="card"><h2>Quote ageing</h2><p>Current pending quote count by age bucket.</p><div id="chartAgeing" class="chart"></div></article>
+      </div>
+      <div class="grid two">
+        <article class="card"><h2>Pending pipeline trend</h2><p>Pending quotes week-by-week for the selected period.</p><div id="chartPendingTrend" class="chart"></div></article>
+        <article class="card"><h2>Quote value gap</h2><p>Total quoted value compared with won value.</p><div id="chartValueGap" class="chart"></div></article>
       </div>
       <article class="card"><h2>Weekly detail</h2><p>Newest first, filtered by selected range.</p><div class="table-wrap"><table id="quoteTable"></table></div></article>
     </section>
