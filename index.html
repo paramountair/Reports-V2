@@ -1,122 +1,78 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Paramount Airconditioning · Quote & Technician Activity Dashboard</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Paramount Reporting Dashboard V7</title>
+<style>
+:root{--orange:#E87722;--navy:#0E2A47;--steel:#2C5F7C;--sand:#EFE9DD;--grey:#607080;--line:#ded6ca;--white:#fff;--shadow:0 18px 45px rgba(14,42,71,.10);--radius:24px}*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,var(--sand),#f7f3ec);color:var(--navy);font-family:Calibri,Arial,sans-serif}.sidebar{position:fixed;inset:0 auto 0 0;width:285px;background:var(--navy);color:white;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.brand{display:flex;align-items:center;gap:12px}.mark{width:46px;height:46px;border:2px solid var(--orange);border-radius:50%;display:grid;place-items:center;color:var(--orange);font-size:30px}.name{font-family:Georgia,serif;font-size:30px;line-height:1}.sub{font-size:11px;letter-spacing:.1em;color:#d5dde5}.pill{border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);border-radius:999px;width:max-content;padding:9px 12px}.nav-title{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:10px}nav{display:grid;gap:8px}button{font:inherit}nav button,.action{border:0;text-align:left;color:white;background:transparent;border-radius:15px;padding:12px 14px;cursor:pointer}.action{border:1px solid rgba(255,255,255,.16)}nav button.active,nav button:hover,.action:hover{background:rgba(232,119,34,.2)}footer{margin-top:auto;color:#d7d0c5;line-height:1.5}main{margin-left:285px;padding:28px;max-width:1900px}.masthead{display:grid;grid-template-columns:1fr 190px;gap:22px;margin-bottom:18px}.masthead>div:first-child,.device,.card,.report-banner,.filters,.kpi{background:white;border-radius:var(--radius);box-shadow:var(--shadow)}.masthead>div:first-child{padding:32px 38px}.eyebrow{color:var(--orange);font-weight:800;text-transform:uppercase;letter-spacing:.16em;font-size:12px;margin-bottom:9px}h1,h2{font-family:Georgia,serif;font-weight:400;margin:0;color:var(--navy)}h1{font-size:48px;line-height:1.02}h2{font-size:27px}.masthead p,.card p{color:var(--grey);margin:8px 0 0;font-size:16px}.device{background:var(--orange);padding:28px;display:flex;flex-direction:column;justify-content:center}.device span{font-family:Georgia,serif;font-size:54px}.device small{font-weight:800;letter-spacing:.12em;text-transform:uppercase}.filters{padding:18px 22px;display:grid;grid-template-columns:180px minmax(280px,1fr) 220px 160px;gap:14px;align-items:end;margin-bottom:18px}.field label{display:block;color:var(--grey);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;margin:0 0 7px}.field select{width:100%;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:white;color:var(--navy);font:inherit;font-size:16px}.generate{background:var(--navy);color:white;border:0;border-radius:16px;font-weight:800;padding:13px 14px;cursor:pointer}.report-banner{border-left:9px solid var(--orange);padding:18px 22px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;gap:18px}.report-banner strong{font-family:Georgia,serif;font-size:26px;font-weight:400}.report-banner span{font-weight:800;color:var(--steel)}.page{display:none}.page.active{display:block}.kpis,.tech-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:22px}.kpi{padding:22px;border-left:8px solid var(--orange)}.kpi small{display:block;color:var(--grey);text-transform:uppercase;letter-spacing:.1em;font-weight:800}.kpi strong{display:block;font-family:Georgia,serif;font-weight:400;font-size:38px;margin:6px 0}.kpi span{color:var(--grey)}.grid{display:grid;gap:22px;margin-bottom:22px}.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:1fr 1fr 1fr}.card{padding:24px}.wide{grid-column:1/-1}.chart{height:400px;margin-top:14px}.chart.tall{height:470px}.table-wrap{overflow:auto;max-height:520px;border:1px solid #eee7df;border-radius:16px;margin-top:14px}table{width:100%;border-collapse:collapse;font-size:15px;background:white}th{position:sticky;top:0;background:#f8f4ee;color:var(--grey);text-align:left;text-transform:uppercase;letter-spacing:.07em;font-size:12px;border-bottom:1px solid var(--line);padding:11px}td{border-bottom:1px solid #eee8df;padding:11px}tr:hover{background:#fbf8f2;cursor:pointer}.signal-good{color:#167a4a;font-weight:800}.signal-ok{color:#b36b00;font-weight:800}.signal-bad{color:#b42318;font-weight:800}.axis{stroke:#d8d0c6;stroke-width:1}.bar{fill:var(--steel)}.bar2{fill:var(--orange)}.line1{fill:none;stroke:var(--steel);stroke-width:4}.line2{fill:none;stroke:var(--orange);stroke-width:4}.target{stroke:var(--orange);stroke-dasharray:8 8;stroke-width:3}.avgline{stroke:var(--navy);stroke-dasharray:5 7;stroke-width:3}.label{font:18px Calibri,Arial;fill:var(--navy)}.smalllabel{font:15px Calibri,Arial;fill:var(--grey)}.value-label{font:bold 18px Calibri,Arial;fill:var(--navy)}.legend{font:bold 16px Calibri,Arial;fill:var(--navy)}@media(max-width:1200px){.sidebar{position:relative;width:auto}.sidebar nav{grid-template-columns:repeat(2,1fr)}main{margin-left:0}.masthead,.grid.two,.grid.three,.kpis,.tech-kpis{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.generate{padding:13px}}@media(max-width:750px){.filters{grid-template-columns:1fr}.report-banner{display:block}h1{font-size:36px}.chart{height:330px}}
+</style>
 </head>
 <body>
-  <aside class="sidebar">
-    <div class="brand"><div class="mark">◎</div><div><div class="name">Paramount</div><div class="sub">Airconditioning</div></div></div>
-    <div class="pill">Reporting · VIC</div>
-    <div class="nav-title">Reports</div>
-    <nav id="mainNav">
-      <button data-page="overview" class="active">Executive Overview</button>
-      <button data-page="quotes">Quote Activity</button>
-      <button data-page="technicians">Technician Performance</button>
-      <button data-page="margins">Margins & Win Rate</button>
-      <button data-page="losses">Loss Reasons</button>
-    </nav>
-    <div class="nav-title">Actions</div>
-    <button class="action" onclick="window.print()">Generate PDF Report</button>
-    <button class="action" id="exportCsv">Export Data (CSV)</button>
-    <button class="action" onclick="window.print()">Print</button>
-    <footer>
-      <strong>Comfort Engineered</strong><br/>
-      Commercial · Industrial · Data Centres
-    </footer>
-  </aside>
-
-  <main>
-    <section class="masthead">
-      <div>
-        <div class="eyebrow">VIC · Quote & Service Reporting</div>
-        <h1 id="pageTitle">Executive Overview</h1>
-        <p id="pageIntro">Headline performance across quoting, margin and technician activity.</p>
-      </div>
-      <div class="device"><span id="deviceNum">01</span><small>Comfort<br/>Engineered</small></div>
-    </section>
-
-    <section class="filters card simplified-filters">
-      <div class="field"><label>View</label><select id="periodTypeSelect"><option>Weekly</option><option>Monthly</option><option>4-Weekly</option><option>Seasonally</option><option>Yearly</option></select></div>
-      <div class="field period-field"><label>Period</label><select id="periodSelect"></select></div>
-      <div class="field"><label>Technician</label><select id="techSelect"><option>All technicians</option></select></div>
-      <button id="generate" class="generate">Generate Report</button>
-    </section>
-
-    <section class="report-banner">
-      <div>Paramount Airconditioning · VIC</div>
-      <strong>Quote & Technician Activity Report</strong>
-      <span id="periodLabel">Selected period</span>
-    </section>
-
-    <section id="overview" class="page active">
-      <div class="kpis">
-        <div class="kpi"><small>Quotes Created</small><strong id="kQuotes">—</strong><span id="kQuotesSub">selected period</span></div>
-        <div class="kpi"><small>Quote Conversion</small><strong id="kConversion">—</strong><span>won ÷ raised</span></div>
-        <div class="kpi"><small>Revenue Won</small><strong id="kRevenue">—</strong><span>converted quote value</span></div>
-        <div class="kpi"><small>Average EGP</small><strong id="kEgp">—</strong><span>target line 55%</span></div>
-      </div>
-      <div class="grid two">
-        <article class="card"><h2>Weekly quote value — won vs total</h2><p>Dollar value of quotes raised vs converted, by week.</p><div id="chartQuoteValue" class="chart"></div></article>
-        <article class="card"><h2>Win rate (by count)</h2><p>Quotes won ÷ quotes raised.</p><div id="chartWinRate" class="chart"></div></article>
-      </div>
-      <div class="grid two">
-        <article class="card"><h2>Average gross margin</h2><p>All quotes vs won quotes. Orange line shows the 55% EGP target.</p><div id="chartEgpOverview" class="chart"></div></article>
-        <article class="card"><h2>Volume mix</h2><p>Quote outcomes for the selected period.</p><div id="chartVolumeMix" class="chart"></div></article>
-      </div>
-    </section>
-
-    <section id="quotes" class="page">
-      <div class="grid two">
-        <article class="card"><h2>Quotes raised vs won — count</h2><p>Volume of quote activity by period.</p><div id="chartQuoteCount" class="chart"></div></article>
-        <article class="card"><h2>Quote ageing</h2><p>Current pending quote count by age bucket.</p><div id="chartAgeing" class="chart"></div></article>
-      </div>
-      <article class="card"><h2>Weekly detail</h2><p>Newest first, filtered by selected range.</p><div class="table-wrap"><table id="quoteTable"></table></div></article>
-    </section>
-
-    <section id="technicians" class="page">
-      <div class="tech-kpis">
-        <div class="kpi"><small>Technician view</small><strong id="techNameKpi">All</strong><span>selected filter</span></div>
-        <div class="kpi"><small>Total attendances</small><strong id="techAttKpi">—</strong><span>5 year / selected period</span></div>
-        <div class="kpi"><small>Quotes raised</small><strong id="techQuoteKpi">—</strong><span>technician generated quotes</span></div>
-        <div class="kpi"><small>Quoted value</small><strong id="techValueKpi">—</strong><span>total quoted dollars</span></div>
-      </div>
-      <article class="card decision-card wide-card">
-        <h2>Period list</h2>
-        <p>When Weekly is selected this lists every week in the 5-year dataset. Click any row to open that period and review every technician inside it.</p>
-        <div class="table-wrap period-table-wrap"><table id="periodSummaryTable"></table></div>
-      </article>
-      <div class="grid two tech-page-grid">
-        <article class="card"><h2>Quote rate benchmark</h2><p>Each technician compared against team average and the target benchmark.</p><div id="chartTechRatio" class="chart benchmark-chart"></div></article>
-        <article class="card"><h2>Maintenance opportunity benchmark</h2><p>Maintenance quote rate by technician, with team average and target lines.</p><div id="chartMaintRatio" class="chart benchmark-chart"></div></article>
-      </div>
-      <div class="grid two tech-page-grid">
-        <article class="card"><h2>Technician trend</h2><p>5-year period trend for attendances vs quotes. Use the technician dropdown to drill into one person.</p><div id="chartTechDetail" class="chart tall"></div></article>
-        <article class="card"><h2>Opportunity funnel</h2><p>Shows the leak from maintenance attendances to quotes written for the selected period.</p><div id="chartTopTechs" class="chart tall"></div></article>
-      </div>
-      <article class="card wide-card"><h2>Selected period technician breakdown</h2><p>All technician names with quotes vs maintenance attendances, maintenance hours, and maintenance-attendance-to-quote ratio.</p><div class="table-wrap large-table"><table id="techWeeklyTable"></table></div></article>
-      <article class="card wide-card"><h2>Technician leaderboard</h2><p>Click a row to filter to one technician and compare them against peers.</p><div class="table-wrap"><table id="techTable"></table></div></article>
-    </section>
-
-    <section id="margins" class="page">
-      <div class="grid two">
-        <article class="card"><h2>Average EGP</h2><p>Average estimated gross profit %, with 55% target line.</p><div id="chartEgp" class="chart large"></div></article>
-        <article class="card"><h2>Win rate — count vs value</h2><p>Compares how many we win against how much we win in dollars.</p><div id="chartWinCountValue" class="chart large"></div></article>
-      </div>
-      <article class="card"><h2>Margin by technician</h2><p>Average nett EGP on technician-generated quotes.</p><div class="table-wrap"><table id="marginTable"></table></div></article>
-    </section>
-
-    <section id="losses" class="page">
-      <div class="grid two">
-        <article class="card"><h2>Top loss reasons</h2><p>Why we lost quotes in the selected period — by count.</p><div id="chartLossReasons" class="chart"></div></article>
-        <article class="card"><h2>Lost value by reason</h2><p>Dollar value of quotes lost, by reason.</p><div id="chartLostValue" class="chart"></div></article>
-      </div>
-      <article class="card"><h2>Reason breakdown</h2><p>Count, share of losses, total $ and average $ per lost quote.</p><div class="table-wrap"><table id="lossTable"></table></div></article>
-    </section>
-  </main>
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+<aside class="sidebar">
+  <div class="brand"><div class="mark">◎</div><div><div class="name">Paramount</div><div class="sub">AIRCONDITIONING</div></div></div>
+  <div class="pill">Reporting · VIC</div>
+  <div class="nav-title">Reports</div>
+  <nav id="mainNav">
+    <button data-page="overview" class="active">Executive Overview</button>
+    <button data-page="quotes">Quote Activity</button>
+    <button data-page="technicians">Technician Performance</button>
+    <button data-page="margins">Margins & Win Rate</button>
+    <button data-page="losses">Loss Reasons</button>
+  </nav>
+  <div class="nav-title">Actions</div>
+  <button class="action" onclick="window.print()">Generate PDF Report</button>
+  <button class="action" id="exportCsv">Export Data (CSV)</button>
+  <button class="action" onclick="window.print()">Print</button>
+  <footer><strong>Comfort Engineered</strong><br/>Commercial · Industrial · Data Centres</footer>
+</aside>
+<main>
+  <section class="masthead"><div><div class="eyebrow">VIC · Quote & Service Reporting</div><h1 id="pageTitle">Executive Overview</h1><p id="pageIntro">Headline performance across quoting, margin and technician activity.</p></div><div class="device"><span id="deviceNum">01</span><small>Comfort<br/>Engineered</small></div></section>
+  <section class="filters card"><div class="field"><label>View</label><select id="periodType"><option>Weekly</option><option>Monthly</option><option>4-Weekly</option><option>Seasonally</option><option>Yearly</option></select></div><div class="field"><label>Period</label><select id="periodSelect"></select></div><div class="field"><label>Technician</label><select id="techSelect"><option>All technicians</option></select></div><button id="generate" class="generate">Generate Report</button></section>
+  <section class="report-banner"><div>Paramount Airconditioning · VIC</div><strong>Quote & Technician Activity Report</strong><span id="periodLabel">Selected period</span></section>
+  <section id="overview" class="page active">
+    <div class="kpis"><div class="kpi"><small>Quotes Created</small><strong id="kQuotes">—</strong><span>selected period</span></div><div class="kpi"><small>Quote Conversion</small><strong id="kConversion">—</strong><span>won ÷ raised</span></div><div class="kpi"><small>Revenue Won</small><strong id="kRevenue">—</strong><span>converted quote value</span></div><div class="kpi"><small>Average EGP</small><strong id="kEgp">—</strong><span>target line 55%</span></div></div>
+    <div class="grid two"><article class="card"><h2>Quoted value — won vs total</h2><p>Value of quotes raised vs converted.</p><div id="chartQuoteValue" class="chart"></div></article><article class="card"><h2>Win rate benchmark</h2><p>Win rate compared against a 55% benchmark line.</p><div id="chartWinRate" class="chart"></div></article></div>
+    <div class="grid two"><article class="card"><h2>Average gross margin</h2><p>All quotes vs won quotes. Orange line shows the 55% EGP target.</p><div id="chartEgpOverview" class="chart"></div></article><article class="card"><h2>Outcome mix</h2><p>Won, pending and lost quote count.</p><div id="chartVolumeMix" class="chart"></div></article></div>
+  </section>
+  <section id="quotes" class="page"><div class="grid two"><article class="card"><h2>Quotes raised vs won — count</h2><p>Volume of quote activity by selected period.</p><div id="chartQuoteCount" class="chart"></div></article><article class="card"><h2>Quote ageing</h2><p>Current pending quote count by age bucket.</p><div id="chartAgeing" class="chart"></div></article></div><article class="card"><h2>Period detail</h2><p>Newest first, filtered by selected period.</p><div class="table-wrap"><table id="quoteTable"></table></div></article></section>
+  <section id="technicians" class="page">
+    <div class="tech-kpis"><div class="kpi"><small>Technician View</small><strong id="techNameKpi">All</strong><span>selected filter</span></div><div class="kpi"><small>Total Attendances</small><strong id="techAttKpi">—</strong><span>selected period</span></div><div class="kpi"><small>Quotes Written</small><strong id="techQuoteKpi">—</strong><span>generated by techs</span></div><div class="kpi"><small>Quoted Value</small><strong id="techValueKpi">—</strong><span>total quote dollars</span></div></div>
+    <article class="card"><h2>Period list</h2><p>Weekly lists every week across 5 years. Click a row to open the period and see every technician’s breakdown for that week/month/season/year.</p><div class="table-wrap"><table id="periodSummaryTable"></table></div></article>
+    <div class="grid two"><article class="card"><h2>Quote rate benchmark</h2><p>Each technician compared with team average and target benchmark.</p><div id="chartTechRatio" class="chart tall"></div></article><article class="card"><h2>Maintenance opportunity benchmark</h2><p>Quotes written per maintenance attendance, with target and peer average lines.</p><div id="chartMaintRatio" class="chart tall"></div></article></div>
+    <div class="grid two"><article class="card"><h2>Technician trend</h2><p>Attendances vs quotes over the selected view. Choose one tech to drill into that person.</p><div id="chartTechTrend" class="chart tall"></div></article><article class="card"><h2>Opportunity funnel</h2><p>Shows where opportunities are leaking: maintenance attendances to quotes written.</p><div id="chartFunnel" class="chart tall"></div></article></div>
+    <article class="card"><h2>Selected period technician breakdown</h2><p>All technicians, quotes vs maintenance attended, maintenance hours, and decision signals.</p><div class="table-wrap"><table id="techBreakdownTable"></table></div></article>
+  </section>
+  <section id="margins" class="page"><div class="grid two"><article class="card"><h2>Average EGP</h2><p>Average estimated gross profit %, with 55% target line.</p><div id="chartEgp" class="chart tall"></div></article><article class="card"><h2>Win rate — count vs value</h2><p>Compares how many are won against how much is won in dollars.</p><div id="chartWinCountValue" class="chart tall"></div></article></div><article class="card"><h2>Margin by technician</h2><p>Average nett EGP on technician-generated quotes.</p><div class="table-wrap"><table id="marginTable"></table></div></article></section>
+  <section id="losses" class="page"><div class="grid two"><article class="card"><h2>Top loss reasons</h2><p>Why quotes were lost — by count.</p><div id="chartLossReasons" class="chart"></div></article><article class="card"><h2>Lost value by reason</h2><p>Dollar value of quotes lost, by reason.</p><div id="chartLostValue" class="chart"></div></article></div><article class="card"><h2>Reason breakdown</h2><p>Count, share of losses, total $ and average $ per lost quote.</p><div class="table-wrap"><table id="lossTable"></table></div></article></section>
+</main>
+<script>
+const TECHS=['Tech 1','Tech 2','Tech 3','Tech 4','Tech 5','Tech 6','Tech 7','Tech 8']; const TARGET_QUOTE=.30, TARGET_MAINT=.18, TARGET_EGP=.55;
+const fmtMoney=n=>new Intl.NumberFormat('en-AU',{style:'currency',currency:'AUD',maximumFractionDigits:0}).format(n||0); const fmtNum=n=>new Intl.NumberFormat('en-AU',{maximumFractionDigits:0}).format(n||0); const fmtPct=n=>`${((n||0)*100).toFixed(1)}%`; const parse=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)}; const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x}; const labelDate=d=>d.toLocaleDateString('en-AU',{day:'2-digit',month:'short',year:'numeric'}); const labelWeek=w=>`${labelDate(parse(w))} – ${labelDate(addDays(parse(w),6))}`; function seed(s){let h=2166136261; for(let i=0;i<s.length;i++){h^=s.charCodeAt(i); h+=(h<<1)+(h<<4)+(h<<7)+(h<<8)+(h<<24)} return Math.abs(h>>>0)/4294967295}
+const weeks=[]; for(let d=parse('2021-06-14'); d<=parse('2026-06-14'); d=addDays(d,7)) weeks.push(iso(d)); const seasons={Summer:[12,1,2],Autumn:[3,4,5],Winter:[6,7,8],Spring:[9,10,11]}; const months=[...new Set(weeks.map(w=>w.slice(0,7)))]; const years=[...new Set(weeks.map(w=>parse(w).getFullYear()))]; const qData=[], tData=[];
+weeks.forEach((w,wi)=>{let totalCreated=0,totalWon=0,totalValue=0,totalWonValue=0,pending=0,egpW=0; TECHS.forEach((t,ti)=>{const s=seed(w+t), d=parse(w), month=d.getMonth()+1; const seasonalBoost=[6,7,8].includes(month)?1.18:[12,1,2].includes(month)?.95:1; const attend=Math.round((11+ti%3*2+s*9)*seasonalBoost); const maint=Math.round(att*(.55+s*.25)); const maintHours=maint*(1.7+s*.9); const quoteRate=.15+ti*.018+seed(t+'rate')*.10+(month>=6&&month<=8?.035:0); const quotes=Math.max(0,Math.round(att*quoteRate+(seed(t+w+'q')-.5)*3)); const value=Math.round(quotes*(2500+s*4500)); const won=Math.round(quotes*(.45+s*.28)); const egp=.38+s*.22; totalCreated+=quotes; totalWon+=won; totalValue+=value; totalWonValue+=Math.round(value*(won/Math.max(quotes,1))*(.85+s*.25)); pending+=Math.round(Math.max(0,quotes-won)*(0.25+s*.25)); egpW+=egp*quotes; tData.push({week:w,technician:t,attendances:att,maint_attended:maint,quotes,maint_hours:maintHours,total_value:value,won,egp}); }); qData.push({week:w,created:totalCreated,won:totalWon,value:totalValue,wonValue:totalWonValue,pending,egp:totalCreated?egpW/totalCreated:0,age0:Math.round(pending*.32),age1:Math.round(pending*.26),age2:Math.round(pending*.24),age3:Math.max(0,pending-Math.round(pending*.82))}); });
+const $=id=>document.getElementById(id); const periodType=$('periodType'), periodSelect=$('periodSelect'), techSelect=$('techSelect');
+function getPeriods(type){ if(type==='Weekly')return weeks.map(w=>({label:labelWeek(w),value:'w:'+w,weeks:[w]})).reverse(); if(type==='Monthly')return months.map(m=>({label:new Date(m+'-01').toLocaleDateString('en-AU',{month:'long',year:'numeric'}),value:'m:'+m,weeks:weeks.filter(w=>w.slice(0,7)===m)})).reverse(); if(type==='4-Weekly'){const out=[]; for(let i=weeks.length-1;i>=0;i-=4){const arr=weeks.slice(Math.max(0,i-3),i+1); out.push({label:`${labelDate(parse(arr[0]))} – ${labelDate(addDays(parse(arr[arr.length-1]),6))}`,value:'b:'+arr[0],weeks:arr})} return out} if(type==='Seasonally'){const out=[]; years.slice().reverse().forEach(y=>['Summer','Autumn','Winter','Spring'].forEach(se=>{const arr=weeks.filter(w=>parse(w).getFullYear()==y&&seasons[se].includes(parse(w).getMonth()+1)); if(arr.length)out.push({label:`${se} ${y}`,value:'s:'+y+se,weeks:arr})})); return out} return years.slice().reverse().map(y=>({label:String(y),value:'y:'+y,weeks:weeks.filter(w=>parse(w).getFullYear()==y)}));}
+function fillPeriods(){periodSelect.innerHTML=''; getPeriods(periodType.value).forEach(p=>periodSelect.add(new Option(p.label,p.value)));}
+function selectedPeriod(){return getPeriods(periodType.value).find(p=>p.value===periodSelect.value)||getPeriods(periodType.value)[0];}
+function qAgg(rows){return rows.reduce((a,r)=>{a.created+=r.created; a.won+=r.won; a.value+=r.value; a.wonValue+=r.wonValue; a.pending+=r.pending; a.egpW+=r.egp*r.created; a.age0+=r.age0; a.age1+=r.age1; a.age2+=r.age2; a.age3+=r.age3; return a},{created:0,won:0,value:0,wonValue:0,pending:0,egpW:0,age0:0,age1:0,age2:0,age3:0})}
+function tAgg(rows){const m={}; rows.forEach(r=>{if(!m[r.technician])m[r.technician]={technician:r.technician,att:0,maint:0,quotes:0,hours:0,value:0,won:0,egpW:0}; const x=m[r.technician]; x.att+=r.attendances; x.maint+=r.maint_attended; x.quotes+=r.quotes; x.hours+=r.maint_hours; x.value+=r.total_value; x.won+=r.won; x.egpW+=r.egp*r.quotes}); return Object.values(m).map(x=>({...x,quoteRate:x.att?x.quotes/x.att:0,maintRate:x.maint?x.quotes/x.maint:0,hoursPerQuote:x.quotes?x.hours/x.quotes:0,egp:x.quotes?x.egpW/x.quotes:0}))}
+function update(){const p=selectedPeriod(); const qs=qData.filter(r=>p.weeks.includes(r.week)); let ts=tData.filter(r=>p.weeks.includes(r.week)); if(techSelect.value!=='All technicians')ts=ts.filter(r=>r.technician===techSelect.value); const q=qAgg(qs), techs=tAgg(ts); $('periodLabel').textContent=p.label; $('kQuotes').textContent=fmtNum(q.created); $('kConversion').textContent=fmtPct(q.created?q.won/q.created:0); $('kRevenue').textContent=fmtMoney(q.wonValue); $('kEgp').textContent=fmtPct(q.created?q.egpW/q.created:0); renderOverview(qs,q); renderTech(ts,techs,p); renderOther(qs,techs,q);}
+function renderOverview(qs,q){barLine('chartQuoteValue',qs.map(r=>({label:r.week.slice(5),bar:r.value,line:r.wonValue})).slice(-30),'Quoted $','Won $'); lineChart('chartWinRate',qs.map(r=>({label:r.week.slice(5),v:r.created?r.won/r.created:0})).slice(-52),0,1,TARGET_EGP,'55% target'); lineChart('chartEgpOverview',qs.map(r=>({label:r.week.slice(5),v:r.egp})).slice(-52),0,.8,TARGET_EGP,'55% EGP'); donut('chartVolumeMix',[['Won',q.won],['Pending',q.pending],['Lost',Math.max(0,q.created-q.won-q.pending)]])}
+function renderTech(ts,techs,p){const totals=techs.reduce((a,t)=>({att:a.att+t.att,maint:a.maint+t.maint,quotes:a.quotes+t.quotes,hours:a.hours+t.hours,value:a.value+t.value}),{att:0,maint:0,quotes:0,hours:0,value:0}); $('techNameKpi').textContent=techSelect.value==='All technicians'?'All techs':techSelect.value; $('techAttKpi').textContent=fmtNum(totals.att); $('techQuoteKpi').textContent=fmtNum(totals.quotes); $('techValueKpi').textContent=fmtMoney(totals.value); const periods=getPeriods(periodType.value).map(pp=>{const rows=tAgg(tData.filter(r=>pp.weeks.includes(r.week)));const a=rows.reduce((x,t)=>({att:x.att+t.att,maint:x.maint+t.maint,quotes:x.quotes+t.quotes,hours:x.hours+t.hours,value:x.value+t.value}),{att:0,maint:0,quotes:0,hours:0,value:0});return {pp,...a,qr:a.att?a.quotes/a.att:0,mr:a.maint?a.quotes/a.maint:0}}); table('periodSummaryTable',[periodType.value==='Weekly'?'Week':'Period','Attendances','Maintenance Attended','Quotes','Quote Rate','Maint Attend/Quote','Maintenance Hours','Quoted $'],periods.map(x=>[x.pp.label,fmtNum(x.att),fmtNum(x.maint),fmtNum(x.quotes),fmtPct(x.qr),x.quotes?(x.maint/x.quotes).toFixed(1):'—',x.hours.toFixed(1),fmtMoney(x.value)]),(i)=>{periodSelect.value=periods[i].pp.value; update(); showPage('technicians')}); const allBench=tAgg(tData.filter(r=>p.weeks.includes(r.week))).sort((a,b)=>b.quoteRate-a.quoteRate); const avgQr=allBench.reduce((s,t)=>s+t.quotes,0)/Math.max(1,allBench.reduce((s,t)=>s+t.att,0)); const avgMr=allBench.reduce((s,t)=>s+t.quotes,0)/Math.max(1,allBench.reduce((s,t)=>s+t.maint,0)); benchmark('chartTechRatio',allBench.map(t=>[t.technician,t.quoteRate]),avgQr,TARGET_QUOTE); benchmark('chartMaintRatio',allBench.sort((a,b)=>b.maintRate-a.maintRate).map(t=>[t.technician,t.maintRate]),avgMr,TARGET_MAINT); const trend=trendRows(ts); barLine('chartTechTrend',trend.map(x=>({label:x.label,bar:x.att,line:x.quotes})),'Attendances','Quotes'); funnel('chartFunnel',[['Maintenance attendances',totals.maint],['Quotes written',totals.quotes],['Quotes won',Math.round(totals.quotes*.58)]]); const avg=avgQr; table('techBreakdownTable',['Technician','Attendances','Maintenance Attended','Quotes Written','Maintenance Hours','Maint Attend/Quote','Quote Rate','Quoted $','Avg EGP','Decision Signal'],techs.sort((a,b)=>b.quoteRate-a.quoteRate).map(t=>[t.technician,fmtNum(t.att),fmtNum(t.maint),fmtNum(t.quotes),t.hours.toFixed(1),t.quotes?(t.maint/t.quotes).toFixed(1):'—',fmtPct(t.quoteRate),fmtMoney(t.value),fmtPct(t.egp),signal(t.quoteRate,avg)]),null,true)}
+function trendRows(rows){const m={}; rows.forEach(r=>{const d=parse(r.week); let key=periodType.value==='Weekly'?r.week:periodType.value==='Monthly'?r.week.slice(0,7):periodType.value==='Yearly'?String(d.getFullYear()):periodType.value==='Seasonally'?`${d.getFullYear()} ${Object.keys(seasons).find(s=>seasons[s].includes(d.getMonth()+1))}`:r.week; if(!m[key])m[key]={label:key,att:0,quotes:0}; m[key].att+=r.attendances; m[key].quotes+=r.quotes}); return Object.values(m).slice(-60)}
+function renderOther(qs,techs,q){barLine('chartQuoteCount',qs.map(r=>({label:r.week.slice(5),bar:r.created,line:r.won})).slice(-30),'Raised','Won'); hbar('chartAgeing',[['0–7 days',q.age0],['8–14 days',q.age1],['15–30 days',q.age2],['31+ days',q.age3]]); table('quoteTable',['Week','Raised','Won','Conversion','Quoted $','Won $','Avg EGP'],qs.slice().reverse().map(r=>[labelWeek(r.week),r.created,r.won,fmtPct(r.created?r.won/r.created:0),fmtMoney(r.value),fmtMoney(r.wonValue),fmtPct(r.egp)])); lineChart('chartEgp',qs.map(r=>({label:r.week.slice(5),v:r.egp})),0,.8,TARGET_EGP,'55% target'); lineChart('chartWinCountValue',qs.map(r=>({label:r.week.slice(5),v:r.created?r.won/r.created:0})),0,1,TARGET_EGP,'55% target'); table('marginTable',['Technician','Quotes','Quoted $','Average Nett EGP','Target Gap'],techs.map(t=>[t.technician,fmtNum(t.quotes),fmtMoney(t.value),fmtPct(t.egp),fmtPct(t.egp-TARGET_EGP)])); const losses=[['Price',Math.round(q.created*.11)],['No response',Math.round(q.created*.09)],['Competitor awarded',Math.round(q.created*.06)],['Scope changed',Math.round(q.created*.04)],['Budget deferred',Math.round(q.created*.03)]]; hbar('chartLossReasons',losses); hbar('chartLostValue',losses.map(x=>[x[0],x[1]*4200]),true); const total=losses.reduce((s,x)=>s+x[1],0); table('lossTable',['Reason','Count','Share','Lost $','Average $'],losses.map(x=>[x[0],x[1],fmtPct(total?x[1]/total:0),fmtMoney(x[1]*4200),fmtMoney(4200)]));}
+function signal(rate,avg){if(rate>=TARGET_QUOTE)return '<span class="signal-good">Above target</span>'; if(rate>=avg)return '<span class="signal-ok">Above team avg</span>'; return '<span class="signal-bad">Needs review</span>'}
+function svgWrap(id,c,h=400){$(id).innerHTML=`<svg viewBox="0 0 950 ${h}" preserveAspectRatio="xMidYMid meet">${c}</svg>`}
+function lineChart(id,data,min,max,target,targetLabel){if(!data.length)return svgWrap(id,'');const W=950,H=400,L=84,R=42,T=40,B=64,pw=W-L-R,ph=H-T-B; const x=i=>L+(data.length<=1?0:i*pw/(data.length-1)), y=v=>T+ph-(v-min)/(max-min)*ph; let c=`<line class="axis" x1="${L}" x2="${W-R}" y1="${T+ph}" y2="${T+ph}"/>`; c+=`<line class="target" x1="${L}" x2="${W-R}" y1="${y(target)}" y2="${y(target)}"/><text class="value-label" x="${W-R-150}" y="${y(target)-10}">${targetLabel}</text>`; c+=`<path class="line1" d="${data.map((d,i)=>(i?'L':'M')+x(i)+' '+y(d.v)).join(' ')}"/>`; c+=`<text class="legend" x="${L}" y="${H-20}">${data[0].label}</text><text class="legend" x="${W-R-130}" y="${H-20}">${data[data.length-1].label}</text>`; svgWrap(id,c,H)}
+function barLine(id,data,barLabel,lineLabel){if(!data.length)return svgWrap(id,'');const W=950,H=400,L=84,R=42,T=42,B=64,pw=W-L-R,ph=H-T-B,max=Math.max(...data.flatMap(d=>[d.bar,d.line]),1); const bw=Math.max(6,pw/data.length*.55), x=i=>L+i*pw/data.length+pw/data.length*.22, y=v=>T+ph-v/max*ph; let c=`<text class="legend" x="${L}" y="24">${barLabel}</text><text class="legend" x="${L+170}" y="24">${lineLabel}</text><line class="axis" x1="${L}" x2="${W-R}" y1="${T+ph}" y2="${T+ph}"/>`; data.forEach((d,i)=>c+=`<rect class="bar" x="${x(i)}" y="${y(d.bar)}" width="${bw}" height="${T+ph-y(d.bar)}" rx="4"/>`); c+=`<path class="line2" d="${data.map((d,i)=>(i?'L':'M')+(x(i)+bw/2)+' '+y(d.line)).join(' ')}"/>`; c+=`<text class="legend" x="${L}" y="${H-20}">${data[0].label}</text><text class="legend" x="${W-R-130}" y="${H-20}">${data[data.length-1].label}</text>`; svgWrap(id,c,H)}
+function hbar(id,items,money=false){const W=950,H=400,L=250,R=120,T=35,B=30,pw=W-L-R,row=(H-T-B)/items.length,max=Math.max(...items.map(x=>x[1]),1); let c=''; items.forEach((it,i)=>{const y=T+i*row+5,w=it[1]/max*pw; c+=`<text class="label" x="20" y="${y+row*.56}">${it[0]}</text><rect class="bar" x="${L}" y="${y}" width="${w}" height="${Math.max(14,row-12)}" rx="6"/><text class="value-label" x="${Math.min(L+w+12,W-150)}" y="${y+row*.56}">${money?fmtMoney(it[1]):fmtNum(it[1])}</text>`}); svgWrap(id,c,H)}
+function benchmark(id,items,avg,target){const W=950,H=470,L=230,R=70,T=60,B=35,pw=W-L-R,row=(H-T-B)/items.length,max=Math.max(...items.map(x=>x[1]),avg,target,.01)*1.15,x=v=>L+v/max*pw; let c=`<line class="target" x1="${x(target)}" x2="${x(target)}" y1="${T}" y2="${H-B}"/><text class="value-label" x="${x(target)+8}" y="24">Target ${fmtPct(target)}</text><line class="avgline" x1="${x(avg)}" x2="${x(avg)}" y1="${T}" y2="${H-B}"/><text class="value-label" x="${x(avg)+8}" y="48">Team avg ${fmtPct(avg)}</text>`; items.forEach((it,i)=>{const y=T+i*row+5,w=it[1]/max*pw; c+=`<text class="label" x="20" y="${y+row*.56}">${it[0]}</text><rect class="bar" x="${L}" y="${y}" width="${w}" height="${Math.max(18,row-12)}" rx="6"/><text class="value-label" x="${Math.min(L+w+12,W-90)}" y="${y+row*.56}">${fmtPct(it[1])}</text>`}); svgWrap(id,c,H)}
+function funnel(id,items){const W=950,H=470,L=120,T=60,max=Math.max(...items.map(x=>x[1]),1); let c=''; items.forEach((it,i)=>{const w=620*(it[1]/max),x=L+(620-w)/2,y=T+i*115; c+=`<rect class="bar" x="${x}" y="${y}" width="${w}" height="62" rx="12"/><text class="value-label" x="${x+w/2-28}" y="${y+39}">${fmtNum(it[1])}</text><text class="label" x="${L+660}" y="${y+38}">${it[0]}</text>`; if(i<items.length-1)c+=`<text class="legend" x="${L+305}" y="${y+98}">↓</text>`}); svgWrap(id,c,H)}
+function donut(id,items){const W=950,H=400,total=items.reduce((s,x)=>s+x[1],0)||1; let cx=245,cy=200,r=110,circ=2*Math.PI*r,off=0,c=''; items.forEach((it,i)=>{const frac=it[1]/total, col=i==0?'#2C5F7C':i==1?'#E87722':'#d6a87c'; c+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${col}" stroke-width="58" stroke-dasharray="${frac*circ} ${circ}" stroke-dashoffset="${-off}" transform="rotate(-90 ${cx} ${cy})"/>`; off+=frac*circ}); c+=`<circle cx="${cx}" cy="${cy}" r="70" fill="white"/><text class="value-label" x="${cx-34}" y="${cy+7}">${fmtNum(total)}</text>`; items.forEach((it,i)=>c+=`<rect x="500" y="${125+i*58}" width="24" height="24" rx="4" fill="${i==0?'#2C5F7C':i==1?'#E87722':'#d6a87c'}"/><text class="legend" x="540" y="${145+i*58}">${it[0]} · ${fmtNum(it[1])}</text>`); svgWrap(id,c,H)}
+function table(id,headers,rows,onClick,html=false){const el=$(id); el.innerHTML='<thead><tr>'+headers.map(h=>`<th>${h}</th>`).join('')+'</tr></thead><tbody>'+rows.map((r,i)=>`<tr data-i="${i}">`+r.map(cell=>`<td>${cell}</td>`).join('')+'</tr>').join('')+'</tbody>'; if(onClick)el.querySelectorAll('tbody tr').forEach(tr=>tr.onclick=()=>onClick(+tr.dataset.i));}
+function showPage(page){document.querySelectorAll('#mainNav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page)); document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page)); const map={overview:['Executive Overview','Headline performance across quoting, margin and technician activity.','01'],quotes:['Quote Activity','Quote volume, ageing, revenue and weekly detail.','02'],technicians:['Technician Performance','Weekly, monthly, seasonal and yearly technician breakdown with benchmarks.','03'],margins:['Margins & Win Rate','Average EGP, target tracking and conversion quality.','04'],losses:['Loss Reasons','Quote losses by reason, count, value and share.','05']}; $('pageTitle').textContent=map[page][0]; $('pageIntro').textContent=map[page][1]; $('deviceNum').textContent=map[page][2];}
+document.querySelectorAll('#mainNav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page)); TECHS.forEach(t=>techSelect.add(new Option(t,t))); periodType.onchange=()=>{fillPeriods(); update()}; [periodSelect,techSelect].forEach(el=>el.onchange=update); $('generate').onclick=update; $('exportCsv').onclick=()=>{const p=selectedPeriod(), rows=tData.filter(r=>p.weeks.includes(r.week)); const csv=Object.keys(rows[0]).join(',')+'\n'+rows.map(r=>Object.values(r).join(',')).join('\n'); const blob=new Blob([csv],{type:'text/csv'}),a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='paramount_technician_report.csv'; a.click()}; fillPeriods(); update();
+</script>
 </body>
 </html>
